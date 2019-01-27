@@ -37,7 +37,7 @@ class App extends Component{
     }
   }
   updatePlaylistName(name){
-    this.state.playlistName = name;
+    this.setState({playlistName: name});
   }
   savePlaylist(){
     var trackURIs = this.state.playlistTracks.map(track =>
