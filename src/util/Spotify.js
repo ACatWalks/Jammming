@@ -7,12 +7,15 @@ const Spotify = {
     if(userAccessToken){
       return userAccessToken;
     } else if (window.location.href.match(/access_token=([^&]*)/) && window.location.href.match(/expires_in=([^&]*)/)){
-      let userAccessToken = window.location.href;
-      let expirationURL = new URLSearchParams(window.location.search);
-      let expirationTime = expirationURL.get('/expires_in=([^&]*)/');
+      let userAccessToken = window.location.href.match(/access_token=([^&]*)/)[1];;
+      //let expirationURL = new URLSearchParams(window.location.search);
+      let expirationTime = window.location.href.match(/expires_in=([^&]*)/)[1];
       window.setTimeout(() => userAccessToken = '', expirationTime * 1000);
       window.history.pushState('Access Token', null, '/');
-      window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+      return userAccessToken;
+    } else{
+      let url = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+      window.location = url;
     }
   },
   search(search_term){
@@ -70,3 +73,5 @@ const Spotify = {
 };
 
 export default Spotify;
+
+//expirationURL.get('/expires_in=([^&]*)/')
